@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../lib');
+const { NotImplementedError } = require("../lib");
 
 /**
  * Implement class VigenereCipheringMachine that allows us to create
@@ -20,14 +20,65 @@ const { NotImplementedError } = require('../lib');
  *
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  constructor(direct = true) {
+    this.direct = direct;
   }
 
-  decrypt() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  encrypt(message, key) {
+    if (!message || !key) {
+      throw new Error("Incorrect arguments!");
+    }
+
+    message = message.toUpperCase();
+    key = key.toUpperCase();
+    let res = [];
+    let indexKey = 0;
+
+    for (let i = 0; i < message.length; i += 1) {
+      const newMessage = message.charCodeAt(i);
+      if (newMessage >= 65 && newMessage <= 90) {
+        const newKey = key.charCodeAt(indexKey % key.length) - 65;
+        const newString = String.fromCharCode(
+          ((newMessage - 65 + newKey) % 26) + 65
+        );
+        res.push(newString);
+        indexKey += 1;
+      } else {
+        res.push(message[i]);
+      }
+    }
+    if (!this.direct) {
+      res.reverse();
+    }
+    return res.join("");
+  }
+
+  decrypt(message, key) {
+    if (!message || !key) {
+      throw new Error("Incorrect arguments!");
+    }
+    message = message.toUpperCase();
+    key = key.toUpperCase();
+    let res = [];
+    let indexKey = 0;
+
+    for (let i = 0; i < message.length; i += 1) {
+      const newMessage = message.charCodeAt(i);
+      if (newMessage >= 65 && newMessage <= 90) {
+        const newKey = key.charCodeAt(indexKey % key.length) - 65;
+        const newString = String.fromCharCode(
+          ((newMessage - 65 - newKey + 26) % 26) + 65
+        );
+        res.push(newString);
+        indexKey += 1;
+      } else {
+        res.push(message[i]);
+      }
+    }
+    if (!this.direct) {
+      res.reverse();
+    }
+    return res.join("");
   }
 }
 
