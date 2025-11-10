@@ -15,15 +15,7 @@ const { NotImplementedError } = require("../lib");
  *
  */
 function countCats(matrix) {
-  let counter = 0;
-  for (let i = 0; i < matrix.length; i += 1) {
-    matrix[i].forEach((e) => {
-      if (e === "^^") {
-        counter += 1;
-      }
-    });
-  }
-  return counter;
+  return matrix.flat(1).filter((e) => e === "^^").length;
 }
 
 module.exports = {

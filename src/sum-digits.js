@@ -13,16 +13,15 @@ const { NotImplementedError } = require("../lib");
  *
  */
 function getSumOfDigits(n) {
-  let number = n;
-  while (number >= 10) {
-    number = number
+  while (n >= 10) {
+    n = n
       .toString()
       .split("")
       .reduce((acc, item) => {
-        return acc + Number(item);
+        return (acc += Number(item));
       }, 0);
   }
-  return number;
+  return n;
 }
 
 module.exports = {
